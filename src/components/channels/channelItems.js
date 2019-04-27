@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, FlatList, Image } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, FlatList, Image, Dimensions } from 'react-native';
+const { width, height } = Dimensions.get("window");
 import { styles } from './styles';
 import { Actions } from 'react-native-router-flux';
 import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards'
@@ -32,10 +33,6 @@ export class ChannelItems extends React.Component {
       this.setState({
         images: results
       })
-      //console.log('Done' , results)
-
-
-
     }
   }
   componentDidMount() {
@@ -55,14 +52,10 @@ export class ChannelItems extends React.Component {
     const url = 'https://nile.rtst.co.za/api/artist/6/tokens';
     const token = await fetch(url, options).then(token_data => token_data.json())
       .then(token_data => {
-
-        //console.log("This is TOKEN from STORE "+ token_data["data"]);
-
         return token_data["data"];
       })
     const channels_options = {
       method: 'GET',
-
       headers: new Headers({
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -76,8 +69,6 @@ export class ChannelItems extends React.Component {
       .then(icon => {
         let img = icon["data"]
 
-        //console.log(id, img)
-
         return { id, img }
       })
 
@@ -86,31 +77,52 @@ export class ChannelItems extends React.Component {
 
   renderItem = (data) => {
 
-    //console.log(this.state.images.length)
     return (
-      <View style={{ width: '100%', height: '100%' }}>
-        <TouchableOpacity style={styles.item} key={data.item.id} onPress={() => Actions.channel({channelData: data.item})}>
 
-          <Card>
-            <View style={{ overflow: 'auto' }}>
+      <TouchableOpacity key={data.item.id} onPress={() => Actions.channel({ channelData: data.item })}>
+        {/*         <Card>
+          <LinearGradient
+            colors={['#0F516C','#76B6C4']}
+            style={{ padding: 7, alignItems: 'center', borderRadius: 3 }}
+            start={[0.0, 0.5]}
+            end={[1.0, 0.5]}
+            locations={[0.0, 1.0]}>
+            <View >
+
               {this.state.images.length > 0 && <CardImage
-              resizeMode="contain"
-              
-                style={{ paddingTop: 12,position: 'absolute', float: 'left', width: 155, backgroundColor: '#fff' }}
+                resizeMode="contain"
+                style={{ paddingTop: 32, position: 'absolute', float: 'left', width: 155, height: 155, backgroundColor: '#fff' }}
                 source={{ uri: this.state.images.find(a => data.item.id === a.id) ? this.state.images.find(a => data.item.id === a.id).img : 'https://via.placeholder.com/150' }}
               />}
               <CardTitle
                 title={data.item.name}
-                
-                style={{ alignText: 'center', width: '60%', fontSize: 15, minHeight: 155, maxHeight: 155, marginLeft: '40%', overflow: 'auto' }}
+
+                style={{ alignText: 'center', width: '60%', fontSize: 15, minHeight: 155, maxHeight: 155, marginLeft: '40%', overflow: 'hidden' }}
+              
               />
+              
             </View>
+          </LinearGradient>
 
 
+        </Card> */}
 
-          </Card>
-        </TouchableOpacity>
-      </View>
+        <View style={{ width: '100%', height: 150, flexDirection: 'row' }}>
+          <View style={{ width: '40%' }}>
+            <Image
+              resizeMode="stretch"
+              style={{ width: 150, height: 150, position: 'absolute' }}
+              source={{ uri: this.state.images.find(a => data.item.id === a.id) ? this.state.images.find(a => data.item.id === a.id).img : 'https://via.placeholder.com/150' }}
+            />
+          </View>
+
+          <View style={{ paddingTop: 32, width: '60%', flex: 1, backgroundColor: 'rgba(0, 0, 0, 0)', alignItems: 'flex-start' }}>
+            <Text style={{ color: 'white', fontSize: 20, margin: 6, fontSize: 21, fontWeight: 'bold', left: 10 }}>{data.item.name}</Text>
+            <Text numberOfLines={1} ellipsizeMode="tail" style={{ color: 'white', margin: 6, fontSize: 15, left: 10 }}>{data.item.description}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+
     );
 
   }
@@ -144,12 +156,12 @@ export class ChannelItems extends React.Component {
 
 
       return (
-        <View>
+        <View >
           {this.state.images.length > 0 &&
             <FlatList
               data={list}
-              horizontal={false}
-              numColumns={2}
+
+              numColumns={1}
               renderItem={item => this.renderItem(item)}
               keyExtractor={item => item.id.toString()}
             />}
@@ -157,10 +169,5 @@ export class ChannelItems extends React.Component {
 
       );
     }
-
-
-
-
   }
 }
-

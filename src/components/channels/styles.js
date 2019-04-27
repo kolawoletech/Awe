@@ -26,10 +26,17 @@ export const styles = StyleSheet.create({
     margin: 20
   },
   item: {
-    backgroundColor: '#0f516c',
     padding: 3,
     margin: 2,
   
+  },
+
+  vertical: {
+    flex: 1,
+
+    justifyContent: 'center',
+    alignItems: 'center',
+
   },
   text: {
     color: '#ffffff',
