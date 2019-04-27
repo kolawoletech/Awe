@@ -38,10 +38,10 @@ export default class Routes extends React.Component {
       <Provider store={store}>
         <RouterRedux hideNavBar={true} navigationBarStyle={styles.navBar} tintColor="#ffffff" titleStyle={styles.barButtonTextStyle}>
           <Stack key="root" >      
-              <Scene key="login" component={SessionContainer} title="Login"  initial={true} />
+              <Scene key="login" component={SessionContainer} title="Login" />
               <Scene key="signup" component={SignupContainer} title="Signup" />
               <Scene key="home" component={HomeContainer} title="Home" />
-              <Scene key="channels" component={ChannelsContainer} title="Channels" />
+              <Scene key="channels" component={ChannelsContainer} title="Channels"  initial={true}  />
               <Scene key="channel" component={ChannelContainer} title="Channel" />
               <Scene key="player" component={PlayerContainer} title="Player" />
               <Scene key="catalogue" component={CatalogueContainer} title="Catalogue" />

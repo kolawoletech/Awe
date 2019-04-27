@@ -96,7 +96,7 @@ export class ChannelItems extends React.Component {
               {this.state.images.length > 0 && <CardImage
               resizeMode="contain"
               
-                style={{ paddingTop: 12,position: 'absolute', float: 'left', width: 155, display: 'block', backgroundColor: '#fff' }}
+                style={{ paddingTop: 12,position: 'absolute', float: 'left', width: 155, backgroundColor: '#fff' }}
                 source={{ uri: this.state.images.find(a => data.item.id === a.id) ? this.state.images.find(a => data.item.id === a.id).img : 'https://via.placeholder.com/150' }}
               />}
               <CardTitle
